@@ -1,2 +1,1 @@
-# GetVerIfix
-test
+# Get SCADA iFIX version
