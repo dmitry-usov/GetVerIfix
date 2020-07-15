@@ -57,6 +57,9 @@ namespace GetVerIfix
                             case 5717:
                                 lblVersion.Text = "3.5";
                                 break;
+                            case 6192:
+                                lblVersion.Text = "4.0";
+                                break;
                             case 6491:
                                 lblVersion.Text = "4.5";
                                 break;
