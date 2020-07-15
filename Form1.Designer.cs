@@ -94,7 +94,7 @@
             // picBuildsToolStripMenuItem
             // 
             this.picBuildsToolStripMenuItem.Name = "picBuildsToolStripMenuItem";
-            this.picBuildsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.picBuildsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.picBuildsToolStripMenuItem.Text = "pic builds";
             this.picBuildsToolStripMenuItem.Click += new System.EventHandler(this.picBuildsToolStripMenuItem_Click);
             // 
@@ -102,7 +102,7 @@
             // 
             this.aboutToolStripMenuItem.Image = global::GetVerIfix.Properties.Resources.github_mark;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.aboutToolStripMenuItem.Text = "git";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -123,7 +123,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 117);
             this.label1.TabIndex = 5;
-            this.label1.Text = "pic builds:\r\n5179 = 3.0;\r\n5717 = 3.5;\r\n6491 = 4.5;\r\n6846 = 5.1;\r\n10179 = 5.5;\r\n10" +
+            this.label1.Text = "5179 = 3.0;\r\n5717 = 3.5;\r\n6192 = 4.0;\r\n6491 = 4.5;\r\n6846 = 5.1;\r\n10179 = 5.5;\r\n10" +
     "383 = 5.8;\r\n10843 = 5.9;\r\n11109 = 6.0;";
             // 
             // btnHide
