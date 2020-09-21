@@ -14,11 +14,86 @@ namespace GetVerIfix
 {
     public partial class Form1 : Form
     {
+
+        private string filename; //текущий файл
+        //private byte[] etalon = { 221, 221, 221, 221, 221, 221, 221, 221 }; //DD DD DD.. в числовом виде
+        private byte[] etalon = { 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD }; 
+        private byte[] buildByteAr;
+        private int picBuild; // билд текущего файла
+        private int picBuildPosition; //Где лежит билд в файле 
+        Dictionary<int, string> pictureBuildsDic;//Словарь билдов и номеров версий
+
         public Form1()
         {
             InitializeComponent();
             this.Width = 349;
+
+            pictureBuildsDic = new Dictionary<int, string>();
+            init();
         }
+
+        private void init()
+        {
+            //заполняем словарь
+            pictureBuildsDic.Add(5179, "3.0");
+            pictureBuildsDic.Add(5717, "3.5");
+            pictureBuildsDic.Add(6192, "4.0");
+            pictureBuildsDic.Add(6491, "4.5");
+            pictureBuildsDic.Add(6846, "5.1");
+            pictureBuildsDic.Add(10179, "5.5");
+            pictureBuildsDic.Add(10383, "5.8");
+            pictureBuildsDic.Add(10843, "5.9");
+            pictureBuildsDic.Add(11109, "6.0");
+
+
+            foreach(int build in pictureBuildsDic.Keys)
+            {
+                picBuildsComboBox.Items.Add(build + " = " + pictureBuildsDic[build]);
+            }
+        }
+
+
+        private void readFile(string filename)
+        {
+            lblPath.Text = filename;
+
+            FileStream fs = File.OpenRead(filename);
+            byte[] b = new byte[8];
+
+            int counter = 0; //счетчик по 8 байт
+
+            while (fs.Read(b, 0, b.Length) > 0)
+            {
+                counter += 8; //+8 к каждому чтению 8 байт
+                if (Enumerable.SequenceEqual(b, etalon))
+                {
+                    byte[] m = new byte[8]; //пропускаем 8 байт
+                    fs.Read(m, 0, m.Length);
+                    counter += 8;
+
+                    picBuildPosition = counter; //Запоминаяем позицию билда
+                    buildByteAr = new byte[8]; //нужные 8 байт
+                    fs.Read(buildByteAr, 0, buildByteAr.Length);
+                    counter += 8;
+
+                    picBuild = buildByteAr[0] + (buildByteAr[1] << 8);
+
+                    lblFixBuild.Text = "picture build: " + picBuild.ToString();
+
+                    if (pictureBuildsDic.ContainsKey(picBuild))
+                    {
+                        lblVersion.Text = pictureBuildsDic[picBuild];
+                    }
+                    else
+                    {
+                        lblVersion.Text = "XZ";
+                    }
+                }
+            }
+            fs.Close();
+        }
+
+       
 
         private void btnChoose_Click(object sender, EventArgs e)
         {
@@ -28,65 +103,8 @@ namespace GetVerIfix
 
             if (chooseFile.ShowDialog() == DialogResult.OK)
             {
-                lblPath.Text = chooseFile.FileName;
-
-
-                FileStream openFile = new FileStream(chooseFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                //DD DD DD.. в числовом виде
-                byte[] etalon = { 221, 221, 221, 221, 221, 221, 221, 221 };
-
-                int counter = 0;
-                FileStream fs = File.OpenRead(chooseFile.FileName);
-                byte[] b = new byte[8];
-
-                while (fs.Read(b, 0, b.Length) > 0)
-                {
-                    if (Enumerable.SequenceEqual(b, etalon))
-                    {
-                        byte[] m = new byte[8]; //пропускаем 8 байт
-                        byte[] n = new byte[8]; //нужные 8 байт
-                        fs.Read(m, 0, m.Length);
-                        fs.Read(n, 0, n.Length);
-
-                        lblFixBuild.Text = "picture build: " + (n[0] + (n[1] << 8)).ToString();
-                        switch (n[0] + (n[1] << 8))
-                        {
-                            case 5179:
-                                lblVersion.Text = "3.0";
-                                break;
-                            case 5717:
-                                lblVersion.Text = "3.5";
-                                break;
-                            case 6192:
-                                lblVersion.Text = "4.0";
-                                break;
-                            case 6491:
-                                lblVersion.Text = "4.5";
-                                break;
-                            case 6846:
-                                lblVersion.Text = "5.1";
-                                break;
-                            case 10179:
-                                lblVersion.Text = "5.5";
-                                break;
-                            case 10383:
-                                lblVersion.Text = "5.8";
-                                break;
-                            case 10843:
-                                lblVersion.Text = "5.9";
-                                break;
-                            case 11109:
-                                lblVersion.Text = "6.0";
-                                break;
-                            default:
-                                lblVersion.Text = "XZ";
-                                break;
-                        }
-                    }
-
-                    counter = counter + 8;
-
-                }
+                filename = chooseFile.FileName;
+                readFile(filename);
             }
         }
 
@@ -103,6 +121,30 @@ namespace GetVerIfix
         private void btnHide_Click(object sender, EventArgs e)
         {
             this.Width = 349;
+        }
+
+
+        private void picBuildsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+            if (filename == null) return;
+            toolStripMenuItem1.HideDropDown();
+            if (MessageBox.Show(this, "Are you sure about that?", "Confirm plz", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+            FileStream fs = File.OpenWrite(filename);
+
+            fs.Seek(picBuildPosition, SeekOrigin.Begin); //Смещаемся до байтов которые содержат билд 
+
+            int selectedBuild = int.Parse(picBuildsComboBox.SelectedItem.ToString().Split('=')[0]);
+
+            byte[] newBuild = buildByteAr;
+
+            newBuild[0] = (byte)(selectedBuild & 0xFF);
+            newBuild[1] = (byte)((selectedBuild >> 8) & 0xFF);
+
+            fs.Write(newBuild, 0, 8);
+            fs.Close();
+            readFile(filename);
+
         }
     }
 }

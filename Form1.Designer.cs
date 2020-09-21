@@ -36,6 +36,9 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.picBuildsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dangerZoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setPicBuildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.picBuildsComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.lblFixBuild = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnHide = new System.Windows.Forms.Button();
@@ -86,7 +89,9 @@
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.picBuildsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.dangerZoneToolStripMenuItem});
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.Black;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
             this.toolStripMenuItem1.Text = "?";
@@ -94,7 +99,7 @@
             // picBuildsToolStripMenuItem
             // 
             this.picBuildsToolStripMenuItem.Name = "picBuildsToolStripMenuItem";
-            this.picBuildsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.picBuildsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.picBuildsToolStripMenuItem.Text = "pic builds";
             this.picBuildsToolStripMenuItem.Click += new System.EventHandler(this.picBuildsToolStripMenuItem_Click);
             // 
@@ -102,9 +107,32 @@
             // 
             this.aboutToolStripMenuItem.Image = global::GetVerIfix.Properties.Resources.github_mark;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "git";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // dangerZoneToolStripMenuItem
+            // 
+            this.dangerZoneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setPicBuildToolStripMenuItem});
+            this.dangerZoneToolStripMenuItem.Name = "dangerZoneToolStripMenuItem";
+            this.dangerZoneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dangerZoneToolStripMenuItem.Text = "danger zone";
+            // 
+            // setPicBuildToolStripMenuItem
+            // 
+            this.setPicBuildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.picBuildsComboBox});
+            this.setPicBuildToolStripMenuItem.ForeColor = System.Drawing.Color.DarkRed;
+            this.setPicBuildToolStripMenuItem.Name = "setPicBuildToolStripMenuItem";
+            this.setPicBuildToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setPicBuildToolStripMenuItem.Text = "set pic build";
+            // 
+            // picBuildsComboBox
+            // 
+            this.picBuildsComboBox.Name = "picBuildsComboBox";
+            this.picBuildsComboBox.Size = new System.Drawing.Size(121, 23);
+            this.picBuildsComboBox.SelectedIndexChanged += new System.EventHandler(this.picBuildsComboBox_SelectedIndexChanged);
             // 
             // lblFixBuild
             // 
@@ -174,6 +202,9 @@
         private System.Windows.Forms.ToolStripMenuItem picBuildsToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnHide;
+        private System.Windows.Forms.ToolStripMenuItem dangerZoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setPicBuildToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox picBuildsComboBox;
     }
 }
 
