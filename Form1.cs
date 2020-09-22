@@ -39,12 +39,12 @@ namespace GetVerIfix
             pictureBuildsDic.Add(5717, "3.5");
             pictureBuildsDic.Add(6192, "4.0");
             pictureBuildsDic.Add(6491, "4.5");
+            pictureBuildsDic.Add(6537, "5.0");
             pictureBuildsDic.Add(6846, "5.1");
             pictureBuildsDic.Add(10179, "5.5");
             pictureBuildsDic.Add(10383, "5.8");
             pictureBuildsDic.Add(10843, "5.9");
             pictureBuildsDic.Add(11109, "6.0");
-
 
             foreach(int build in pictureBuildsDic.Keys)
             {
