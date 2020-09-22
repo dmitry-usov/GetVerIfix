@@ -45,8 +45,9 @@ namespace GetVerIfix
             pictureBuildsDic.Add(10383, "5.8");
             pictureBuildsDic.Add(10843, "5.9");
             pictureBuildsDic.Add(11109, "6.0");
+            pictureBuildsDic.Add(11407, "6.1");
 
-            foreach(int build in pictureBuildsDic.Keys)
+            foreach (int build in pictureBuildsDic.Keys)
             {
                 picBuildsComboBox.Items.Add(build + " = " + pictureBuildsDic[build]);
             }
