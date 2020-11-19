@@ -26,7 +26,7 @@ namespace GetVerIfix
         public Form1()
         {
             InitializeComponent();
-            this.Width = 349;
+            this.Width = 355;
 
             pictureBuildsDic = new Dictionary<int, string>();
             init();
@@ -51,13 +51,24 @@ namespace GetVerIfix
             foreach (int build in pictureBuildsDic.Keys)
             {
                 picBuildsComboBox.Items.Add(build + " = " + pictureBuildsDic[build]);
+                lbPicBuilds.Items.Add(build + " = " + pictureBuildsDic[build]);
             }
         }
 
-
         private void readFile(string filename)
         {
-            lblPath.Text = filename;
+            if (filename.EndsWith(".grf"))
+            {
+                lblPath.ForeColor = Color.Black;
+                lblPath.Text = filename;
+            }
+            else
+            {
+                lblPath.ForeColor = Color.Red;
+                lblPath.Text = "Нажми или перетащи картинку *.grf на область ниже";
+                lblVersion.Text = "";
+                lblFixBuild.Text = "";
+            }
 
             FileStream fs = File.OpenRead(filename);
             byte[] b = new byte[8];
@@ -95,21 +106,6 @@ namespace GetVerIfix
             fs.Close();
         }
 
-       
-
-        private void btnChoose_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog chooseFile = new OpenFileDialog();
-            chooseFile.Title = "Выберите картинку iFIX";
-            chooseFile.Filter = "Рисунок iFIX|*.grf";
-
-            if (chooseFile.ShowDialog() == DialogResult.OK)
-            {
-                filename = chooseFile.FileName;
-                readFile(filename);
-            }
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Strider757/GetVerIfix");
@@ -117,14 +113,13 @@ namespace GetVerIfix
 
         private void picBuildsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int picbuildMenu = (this.Width == 349) ? this.Width = 470 : this.Width = 349;
+            int picbuildMenu = (this.Width == 355) ? this.Width = 505 : this.Width = 355;
         }
 
         private void btnHide_Click(object sender, EventArgs e)
         {
-            this.Width = 349;
+            this.Width = 355;
         }
-
 
         private void picBuildsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -147,6 +142,26 @@ namespace GetVerIfix
             fs.Close();
             readFile(filename);
 
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog chooseFile = new OpenFileDialog();
+            chooseFile.Title = "Выберите картинку iFIX";
+            chooseFile.Filter = "Рисунок iFIX|*.grf";
+
+            if (chooseFile.ShowDialog() == DialogResult.OK)
+            {
+                filename = chooseFile.FileName;
+                readFile(filename);
+            }
+        }
+
+        private void panel1_DragEnter(object sender, DragEventArgs e)
+        {
+            string[] pic = (string[])e.Data.GetData(DataFormats.FileDrop);
+            filename = pic[0].ToString();
+            readFile(filename);
         }
     }
 }
